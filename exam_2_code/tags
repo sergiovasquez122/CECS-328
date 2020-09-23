@@ -1,0 +1,3 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+main	/home/sergio/CECS-328/exam_2_code/main.cpp	/^int main() {$/;"	f	language:C++
+min_element_in_rotated_array	/home/sergio/CECS-328/exam_2_code/main.cpp	/^int min_element_in_rotated_array(vector<int> A){$/;"	f	language:C++
