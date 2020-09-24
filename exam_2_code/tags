@@ -1,3 +1,8 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
-main	/home/sergio/CECS-328/exam_2_code/main.cpp	/^int main() {$/;"	f	language:C++
-min_element_in_rotated_array	/home/sergio/CECS-328/exam_2_code/main.cpp	/^int min_element_in_rotated_array(vector<int> A){$/;"	f	language:C++
+array_idx	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^    int array_idx;$/;"	m	language:C++	struct:Node	file:
+curr_idx	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^    int curr_idx;$/;"	m	language:C++	struct:Node	file:
+element	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^    int element;$/;"	m	language:C++	struct:Node	file:
+merge_k_array	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^vector<int> merge_k_array(const vector<vector<int>>& A){$/;"	f	language:C++
+Node	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^struct Node{$/;"	s	language:C++	file:
+operator <	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^    bool operator<(const Node& rhs) const{$/;"	f	language:C++	struct:Node
+operator >	/home/sergio/CECS-328/exam_2_code/part2.cpp	/^    bool operator>(const Node& rhs) const{$/;"	f	language:C++	struct:Node
