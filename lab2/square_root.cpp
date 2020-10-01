@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/**
+ * T(n) = T(n / 2) + O(1)
+ * T(n) = O(log_2(n))
+ */
 int square_root(int x){
     int lo = 0, hi = x;
     while(lo <= hi){

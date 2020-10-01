@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/**
+ * T(n) = T(n / 2) + O(1)
+ * T(n) = O(log_2(n))
+ */
 int find_smallest_missing_number(const vector<int>& A){
     int lo = 0, hi = A.size() - 1;
     while(lo <= hi){
