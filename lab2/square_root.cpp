@@ -3,10 +3,12 @@
 
 using namespace std;
 
-/**
- * T(n) = T(n / 2) + O(1)
- * T(n) = O(log_2(n))
- */
+bool get_line(string& line){
+    cout << "enter non-negative integer: ";
+    getline(cin, line);
+    return !line.empty();
+}
+
 int square_root(int x){
     int lo = 0, hi = x;
     while(lo <= hi){
@@ -20,8 +22,9 @@ int square_root(int x){
 }
 
 int main() {
-    cout << square_root(37) << endl;
-    cout << square_root(29) << endl;
-    cout << square_root(28) << endl;
-    cout << square_root(16) << endl;
+    string user_input;
+    while(get_line(user_input)){
+        int x = stoi(user_input);
+        cout << "ceiling of the square root of x is: " << square_root(x) << endl;
+    }
 }
