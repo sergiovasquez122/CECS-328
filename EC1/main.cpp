@@ -59,32 +59,27 @@ double median_of_two_sorted_arrays(const vector<int>& a, const vector<int>& b){
     return median_of_two_sorted_arrays(a, 0, a.size() - 1,b, 0, b.size() - 1);
 }
 
-
-int main(){
-    string userinput;
-    while(get_line("press any key then enter to continue: ", userinput)){
-        cout << "enter n sorted elements for a1: ";
-        getline(cin, userinput);
-        stringstream ss(userinput);
-        vector<int> a1;
-        int value;
-        while(ss >> value){
-            a1.push_back(value);
+int split_point(const vector<int> &A){
+    int lo = 0, hi = A.size() - 1;
+    int result = -1;
+    while(lo <= hi){
+        int mid = (lo + hi) / 2;
+        if(A[mid] == 0){
+            result = mid;
+            lo = mid + 1;
+        } else{
+            hi = mid - 1;
         }
-
-        cout << "enter n sorted elements for a2: ";
-        getline(cin, userinput);
-        ss = stringstream(userinput);
-        vector<int> a2;
-        while(ss >> value){
-            a2.push_back(value);
-        }
-        cout << "the median of a1 and a2 is : " << median_of_two_sorted_arrays(a1, a2)  << endl;
     }
+    return result + 1;
 }
 
 /**
-   example usage:
+   example usage for part1:
+   enter a binary where the first k elements are '0' and the rest of the n - k elements are '1': 0 0 0 1 1
+   output:  K = 3
+
+   example usage for part2:
    press any key then enter to continue: a
    enter n sorted elements for a1: 0 2 10 26 68
    enter n sorted elements for a2: 1 11 18 20 41
@@ -99,3 +94,37 @@ int main(){
    the median of a1 and a2 is : 7.5
    press any key then enter to continue:
  */
+int main(){
+    string userinput;
+
+    while(get_line("(part 1) enter a binary where the first k elements are '0' and the rest of the n - k elements are '1': ", userinput)){
+        vector<int> binary_array;
+        stringstream ss(userinput);
+        int value;
+        while(ss >> value){
+            binary_array.push_back(value);
+        }
+        int k = split_point(binary_array);
+        cout << "K = " << k << endl;
+    }
+
+    while(get_line("(part 2) press any key then enter to continue: ", userinput)){
+        cout << "enter n sorted elements for a1: ";
+        getline(cin, userinput);
+        stringstream ss(userinput);
+        vector<int> a1;
+        int value;
+        while(ss >> value){
+            a1.push_back(value);
+        }
+        cout << "enter n sorted elements for a2: ";
+        getline(cin, userinput);
+        ss = stringstream(userinput);
+        vector<int> a2;
+        while(ss >> value){
+            a2.push_back(value);
+        }
+        cout << "the median of a1 and a2 is : " << median_of_two_sorted_arrays(a1, a2)  << endl;
+    }
+}
+
