@@ -31,11 +31,17 @@ double median_of_two_sorted_arrays(const vector<int>& a, int a_lo, int a_hi,cons
 
     if(equal(a_median, b_median)){
         return a_median;
-    } else if(even_sized && a_median < b_median){
+    }
+
+    // in the case we have even arrays to ensure valid splittings
+    if(even_sized && a_median < b_median){
         return median_of_two_sorted_arrays(a, a_mid + 1, a_hi, b, b_lo, b_mid);
     } else if(even_sized && a_median > b_median) {
         return median_of_two_sorted_arrays(a, a_lo, a_mid, b, b_mid + 1, b_hi);
-    } else if(a_median < b_median){
+    }
+
+    // in the case of odd arrays to ensure valid splittings
+    if(a_median < b_median){
         return median_of_two_sorted_arrays(a, a_mid, a_hi, b, b_lo, b_mid);
     } else {
         return median_of_two_sorted_arrays(a, a_lo, a_mid, b, b_mid, b_hi);
