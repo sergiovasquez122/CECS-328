@@ -8,6 +8,7 @@ using namespace std;
 struct my_pair{
     vector<int> modes;
     vector<int> hist;
+    vector<int> repeated;
 };
 
 bool get_line(const string& prompt, string& userinput){
@@ -18,7 +19,7 @@ bool get_line(const string& prompt, string& userinput){
 
 // total runtime is O(n)
 vector<int> histogram_generator(const vector<int>& A){
-    vector<int> result(A.size() + 1);
+    vector<int> result(A.size() + 1); // O(n)
     // O(n)
     for(int e : A){
         ++result[e];
@@ -28,7 +29,7 @@ vector<int> histogram_generator(const vector<int>& A){
 
 // the total runtime is O(n)
 my_pair find_mode_and_numbers_repeated_more_than_once(const vector<int>& A){
-    auto hist = histogram_generator(A);
+    auto hist = histogram_generator(A); // O(n)
     vector<int> modes;
     vector<int> numbers_repeated_more_than_once;
     int max_count = 0;
@@ -41,8 +42,12 @@ my_pair find_mode_and_numbers_repeated_more_than_once(const vector<int>& A){
         if(hist[i] == max_count){
             modes.emplace_back(i);
         }
+
+        if(hist[i] > 1){
+            numbers_repeated_more_than_once.push_back(i);
+        }
     }
-    return {modes, hist};
+    return {modes, hist, numbers_repeated_more_than_once};
 }
 
 void display_arr(const vector<int>& arr){
@@ -68,12 +73,9 @@ int main() {
             cout << " " << mode;
         }
         cout << endl;
-        for (int i = 0; i < a.size(); i++) {
-            if (the_pair.hist[i] > 1) {
-                cout << i << " appears " << the_pair.hist[i] << " times" << endl;
-            }
+        for(const auto &repeated_number : the_pair.repeated){
+            cout << repeated_number << " was repeated "  << the_pair.hist[repeated_number] << " times" << endl;
         }
-        cout << endl;
     }
 }
 
