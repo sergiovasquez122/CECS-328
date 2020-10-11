@@ -3,16 +3,6 @@
 
 using namespace std;
 
-int brute_force_solution(const vector<int>& A, int key){
-    int count = 0;
-    for(int i = 0;i < A.size();i++){
-        if(A[i] == key){
-            count++;
-        }
-    }
-    return count;
-}
-
 // T(n) = O(log_2(n))
 int elegant_solution(const vector<int>& A, int key){
     int lower_bound = -1; // O(1)
