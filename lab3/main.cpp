@@ -13,15 +13,17 @@ bool get_line(const string& prompt, string& userinput){
 
 int partition(vector<int> &arr, int lo, int hi, int pivot_idx){
     int pivot_value = arr[pivot_idx];
-    int new_pivot_idx = lo;
-    swap(arr[pivot_idx], arr[hi]);
-    for(int i = lo;i < hi;i++){
-        if(arr[i] < pivot_value){
-            swap(arr[i], arr[new_pivot_idx++]);
-        }
+    int left = lo - 1;
+    int right = hi;
+    swap(arr[pivot_idx], arr[right]);
+    while(left < right){
+        while(arr[++left] < pivot_value) if(left == right) break;
+        while(arr[--right] > pivot_value) if(left == right) break;
+        if(left >= right) break;
+        swap(arr[left], arr[right]);
     }
-    swap(arr[new_pivot_idx], arr[hi]);
-    return new_pivot_idx;
+    swap(arr[left],arr[hi]);
+    return left;
 }
 
 void display_array(const vector<int>& A){
@@ -29,34 +31,22 @@ void display_array(const vector<int>& A){
     cout << endl;
 }
 
-int quick_select(vector<int> &arr, int k){
+int quick_select_idx(vector<int> &arr, int k){
     unsigned int seed = chrono::steady_clock::now().time_since_epoch().count();
     mt19937 gen(seed);
     int lo = 0, hi = arr.size() - 1;
-    while(lo <= hi){
-        int pivot_idx = uniform_int_distribution<int>{lo, hi}(gen);
-        int new_pivot_idx = partition(arr, lo, hi, pivot_idx);
-        if(new_pivot_idx == k - 1) return arr[new_pivot_idx];
-        else if(new_pivot_idx < k - 1) lo = new_pivot_idx + 1;
-        else hi = new_pivot_idx - 1;
-    }
-}
-
-int find_starting_idx(vector<int> &arr, int k){
-    unsigned int seed = chrono::steady_clock::now().time_since_epoch().count();
-    mt19937 gen(seed);
-    int lo = 0, hi = arr.size() - 1;
-    while(lo <= hi){
+    while(lo < hi){
         int pivot_idx = uniform_int_distribution<int>{lo, hi}(gen);
         int new_pivot_idx = partition(arr, lo, hi, pivot_idx);
         if(new_pivot_idx == k - 1) return new_pivot_idx;
         else if(new_pivot_idx < k - 1) lo = new_pivot_idx + 1;
         else hi = new_pivot_idx - 1;
     }
+    return lo;
 }
 
 vector<int> max_k_numbers(vector<int>& arr, int k){
-    int starting_idx = find_starting_idx(arr, arr.size() - k + 1);
+    int starting_idx = quick_select_idx(arr, arr.size() - k + 1);
     vector<int> result;
     for(int i = starting_idx;i < arr.size();i++)
         result.push_back(arr[i]);
@@ -80,7 +70,8 @@ int main(){
         string second_input;
         get_line("Enter a number between 1 to n: ", second_input);
         int kth = stoi(second_input);
-        cout << quick_select(A, kth) << endl;
+        int idx = quick_select_idx(A, kth);
+        cout << A[idx] << endl;
     }
 
     while(get_line("(part 2) Enter positive integer n: ", userinput)){
