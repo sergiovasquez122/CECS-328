@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <functional>
 #include <random>
 
 using namespace std;
@@ -71,7 +70,8 @@ double median_selection(vector<int>& arr){
         median = arr[median_idx];
     } else {
         int median_idx1 = quick_select_idx(arr, arr.size() / 2);
-        median = (double) (arr[median_idx1] + arr[median_idx1 + 1]) / 2;
+        int median_idx2 = quick_select_idx(arr, arr.size() / 2 + 1);
+        median = (arr[median_idx1] + arr[median_idx2]) / 2.0;
     }
     return median;
 }
