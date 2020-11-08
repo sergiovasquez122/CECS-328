@@ -33,7 +33,7 @@ void selection_sort(vector<int>& a){
 }
 
 void build_MaxHeap(vector<int>& a){
-    for(int i = a.size() / 2;i >= 0;i--){
+    for(int i = (a.size() - 1) / 2;i >= 0;i--){
         max_heapify(a, i, a.size());
     }
 }
