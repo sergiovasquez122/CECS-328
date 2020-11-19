@@ -114,7 +114,7 @@ double find_max_crossing_subarray(const vector<T>& arr, int low, int mid, int hi
 template<typename T>
 double find_MPSS(const vector<T> &arr, int lo, int hi){
     if(lo == hi)
-        return arr[lo];
+        return max(arr[lo], T());
     int mid = (lo + hi) / 2;
     double mss_l = find_MPSS(arr, lo, mid);
     double mss_r = find_MPSS(arr, mid + 1, hi);
