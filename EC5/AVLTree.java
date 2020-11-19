@@ -61,13 +61,13 @@ public class AVLTree {
     }
 
     private Node rebalance(Node x){
-        if(height(x.left) - height(x.right) > 1){
-            if(height(x.left.right) >= height(x.left.left)){
+        if(BB(x) > 1){
+            if(BB(x.left) < 0){
                 x.left = lr(x.left);
             }
             x = rr(x);
-        } else if(height(x.right) - height(x.left) > 1){
-            if(height(x.right.left) >= height(x.right.right)){
+        } else if(BB(x) < -1){
+            if(BB(x.right) > 0){
                 x.right = rr(x.right);
             }
             x = lr(x);
@@ -100,6 +100,10 @@ public class AVLTree {
 
     public int height(){
         return height(root);
+    }
+
+    public int BB(Node x){
+        return height(x.left) - height(x.right);
     }
 
     public Iterable<Integer> keysInOrder(){
