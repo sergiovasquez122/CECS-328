@@ -13,6 +13,60 @@ bool get_line(const string& prompt, string& userinput){
     return !userinput.empty();
 }
 
+template<typename T>
+void partial_sort(vector<T>& arr, int lower_bound, int upper_bound){
+    for(int i = lower_bound;i <= upper_bound;i++){
+        for(int j = i;j > 0 && arr[j] < arr[j - 1];j--){
+            swap(arr[j], arr[j - 1]);
+        }
+    }
+}
+
+template<typename T>
+int median_of_three(vector<T>& arr, int lo, int hi){
+    int mid = (lo + hi) / 2;
+    if(arr[lo] > arr[hi])
+        swap(arr[lo], arr[hi]);
+    if(arr[lo] > arr[mid])
+        swap(arr[lo], arr[mid]);
+    if(arr[mid] > arr[hi])
+        swap(arr[mid], arr[hi]);
+    return mid;
+}
+
+template<typename T>
+int partition(vector<T> &arr, int lo, int hi){
+    int i = lo - 1, j = hi;
+    T pivot_value = arr[hi];
+    while(true){
+        while(arr[++i] < pivot_value) if(i == hi) break;
+        while(arr[--j] > pivot_value) if(j == lo) break;
+        if(i >= j) break;
+        swap(arr[i], arr[j]);
+    }
+    swap(arr[i], arr[hi]);
+    return i;
+}
+
+template<typename T>
+void quick_sort(vector<T>& arr, int lo, int hi){
+    const int CUTOFF_TO_INSERTION_SORT = 3;
+    if(hi <= lo + CUTOFF_TO_INSERTION_SORT){
+        partial_sort(arr, lo, hi);
+        return;
+    }
+    int pivot_idx = median_of_three(arr, lo, hi);
+    swap(arr[pivot_idx], arr[hi]);
+    int new_pivot_idx = partition(arr, lo, hi);
+    quick_sort(arr, lo, new_pivot_idx - 1);
+    quick_sort(arr, new_pivot_idx + 1, hi);
+}
+
+template<typename T>
+void quick_sort(vector<T>& arr){
+    quick_sort(arr, 0, arr.size() - 1);
+}
+
 bool AreSame(double a, double b)
 {
     return fabs(a - b) < numeric_limits<double>::epsilon();
@@ -40,9 +94,9 @@ double find_max_crossing_subarray(const vector<T>& arr, int low, int mid, int hi
         sum += arr[i];
         right_sum[counter++] += sum;
     }
-    sort(left_sum.begin(), left_sum.end());
-    sort(right_sum.rbegin(), right_sum.rend());
-
+    quick_sort(left_sum);
+    quick_sort(right_sum);
+    reverse(right_sum.begin(), right_sum.end());
     int i = 0;
     int j = 0;
     double s_min = numeric_limits<double>::max();
