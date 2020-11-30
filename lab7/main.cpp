@@ -19,7 +19,7 @@ void bfs(const Graph& G, int source){
     vector<int> distTo(G.V(), std::numeric_limits<int>::max());
     deque<int> edgeTo(G.V(), -1);
     distTo[source] = 0;
-    edgeTo[source] = std::numeric_limits<int>::lowest();
+    edgeTo[source] = 0;
     queue<int> q;
     q.push(source);
     while(!q.empty()){
@@ -37,9 +37,10 @@ void bfs(const Graph& G, int source){
         if(distTo[v] != std::numeric_limits<int>::max()){
             cout << "Shortest Path cost from: "<< source << " to " <<  v << " is " << distTo[v] << endl;
             vector<int> path;
-            for(int e = v;e != std::numeric_limits<int>::lowest();e = edgeTo[e]){
+            for(int e = v;e != source;e = edgeTo[e]){
                 path.push_back(e);
             }
+            path.push_back(source);
             for(int i = path.size() - 1;i >= 1;i--){
                 cout << path[i] << "->";
             }
@@ -98,10 +99,12 @@ Graph generate_graph(int V, int E){
     }
     long seed = chrono::system_clock::now().time_since_epoch().count();
     mt19937 gen(seed);
-    uniform_int_distribution<int> uniform_int_distribution(0, E - 1);
+    uniform_int_distribution<int> uniform_int_distribution(0, E);
     for(int i = E;i < all_subsets.size();i++){
         int random_idx = uniform_int_distribution(gen);
-        subset[random_idx] = all_subsets[i];
+        if(random_idx < E) {
+            subset[random_idx] = all_subsets[i];
+        }
     }
     Graph G(V);
     for(const auto& p : subset){
