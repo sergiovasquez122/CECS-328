@@ -15,14 +15,14 @@ TopologicalSort::TopologicalSort(const Graph &G)
 }
 
 void TopologicalSort::dfs(const Graph &G, int v) {
-    start_times[v] = timer++;
+    start_times[v] = ++timer;
     for(int w : G.adj(v)){
         if(parent[w] == std::numeric_limits<int>::lowest()){
             parent[w] = v;
             dfs(G, w);
         }
     }
-    end_times[v] = timer++;
+    end_times[v] = ++timer;
     top_order.push_back(v);
 }
 

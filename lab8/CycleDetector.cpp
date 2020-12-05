@@ -20,15 +20,15 @@ bool CycleDetector::has_cycle() {
 }
 
 void CycleDetector::dfs(const Graph &G, int v) {
-    start_times[v] = timer++;
+    start_times[v] = ++timer;
     for(int w : G.adj(v)){
         if(parent[w] == std::numeric_limits<int>::lowest()){
             parent[w] = v;
             dfs(G, w);
-        } else if(parent[w] != std::numeric_limits<int>::lowest() && end_times[w] == -1){
+        } else if(end_times[w] == -1){
             cycle_found = true;
             std::cout << "Cycle detected, topological sort is impossible" << std::endl;
         }
     }
-    end_times[v] = timer++;
+    end_times[v] = ++timer;
 }
