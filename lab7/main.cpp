@@ -19,7 +19,7 @@ void bfs(const Graph& G, int source){
     vector<int> distTo(G.V(), std::numeric_limits<int>::max());
     deque<int> edgeTo(G.V(), -1);
     distTo[source] = 0;
-    edgeTo[source] = 0;
+    edgeTo[source] = -1;
     queue<int> q;
     q.push(source);
     while(!q.empty()){
