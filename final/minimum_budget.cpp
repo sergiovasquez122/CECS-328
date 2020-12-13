@@ -47,7 +47,8 @@ int select_min(const deque<bool>& in_mst, const vector<double>& cost){
     return chosen_vertex;
 }
 
-double prims(const vector<vector<double>>& adjmat){
+double prims(const vector<vector<int>>& buildings){
+    auto adjmat = generate_graph(buildings); // O(V**2)
     int V = adjmat.size();
     deque<bool> in_tree(V, false);
     vector<double> cost(V, std::numeric_limits<double>::max());
@@ -55,15 +56,16 @@ double prims(const vector<vector<double>>& adjmat){
     int iterations = 0;
     while(iterations < V - 1){
         int curr = select_min(in_tree, cost); // select next valid candidate
-        in_tree[curr] = true;
+        in_tree[curr] = true; // O(V)
         iterations++;
-        for(int i = 0;i < V;i++){
+        for(int i = 0;i < V;i++){ // O(V)
             if(adjmat[curr][i] > 0 && !in_tree[i] && adjmat[curr][i] < cost[i]){
                 cost[i] = adjmat[curr][i];
             }
         }
     }
     // adding up the edge weights of the mst
+    // O(V)
     double result = 0;
     for(double d : cost){
         result += d;
@@ -72,12 +74,4 @@ double prims(const vector<vector<double>>& adjmat){
 }
 
 int main(){
-    vector<vector<int>> buildings = {{0, 0}, {1, 2}, {3, 1}, {4, 4}};
-    auto graph = generate_graph(buildings);
-    display_matrix(graph);
-    cout << prims(graph) << endl;
-    vector<vector<int>> buildings2 = {{0, 0}, {0, 1}, {2, 0}, {3, 0}, {4, 3}};
-    auto graph2 = generate_graph(buildings2);
-    display_matrix(graph2);
-    cout << prims(graph2) << endl;
 }
