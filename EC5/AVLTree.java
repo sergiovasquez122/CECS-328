@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class AVLTree {
 
@@ -112,10 +113,6 @@ public class AVLTree {
         return items;
     }
 
-    private void printTree(){
-        BTreePrinter.printNode(root);
-    }
-
     private void inorderTraversal(Node x){
         if(x == null) return;
         inorderTraversal(x.left);
@@ -132,6 +129,41 @@ public class AVLTree {
         traversal(items, x.left);
         items.add(x.key);
         traversal(items, x.right);
+    }
+
+    public void printTree(){
+        Stack<Node> globalStack = new Stack<>();
+        globalStack.push(root);
+        int nBlanks = 32;
+        boolean isRowEmpty = false;
+        System.out.println("......................................................");
+        while(!isRowEmpty){
+            Stack<Node> localStack = new Stack<>();
+            isRowEmpty = true;
+            for(int j = 0;j < nBlanks;++j){
+                System.out.print(' ');
+            }
+
+            while(!globalStack.isEmpty()){
+                Node temp = globalStack.pop();
+                if(temp != null){
+                    System.out.print(temp.key);
+                    localStack.push(temp.left);
+                    localStack.push(temp.right);
+                    isRowEmpty = !(temp.left != null || temp.right != null);
+                } else {
+                    System.out.print("--");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                for(int j = 0;j < nBlanks * 2 - 2;++j)
+                    System.out.print(' ');
+            }
+            System.out.println();
+            nBlanks /= 2;
+            while(!localStack.isEmpty()) globalStack.push(localStack.pop());
+        }
+        System.out.println("......................................................");
     }
 
     public static void main(String[] args) {
